@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VAT Calculator Germany - Add VAT to Net Price Online | Vat Calculator German</title>
+  <meta name="description" content="Free VAT calculator for Germany. Add VAT to a net price in seconds with 19%, 7%, 10% or any custom rate. No sign-up needed.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="VAT Calculator Germany - Add VAT to Net Price Online">
+  <meta property="og:description" content="Free and fast VAT calculator. Enter a net amount, pick a rate and get the gross price instantly.">
+  <meta property="og:site_name" content="Vat Calculator German">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "Vat Calculator German",
+        "description": "Free online VAT calculator to add VAT to a net amount."
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I add VAT to a net price?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Multiply the net price by the VAT rate divided by 100 to get the VAT amount, then add it to the net price. Gross = Net + (Net x Rate / 100). For example, 100 EUR at 19% VAT gives 19 EUR VAT and a gross price of 119 EUR."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the VAT rates in Germany?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Germany has a standard VAT rate of 19% and a reduced rate of 7% for certain goods and services. Rates can change, so always check official sources for the current rules."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use a VAT rate that is not in the list?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Choose Custom and type any rate between 0 and 100."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is my data stored or sent anywhere?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. All calculations run in your browser. The amounts you enter are never sent to a server or stored."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I remove VAT from a gross price?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Divide the gross price by 1 plus the rate as a decimal. Net = Gross / (1 + Rate / 100). For example, 119 EUR gross at 19% gives a net price of 100 EUR."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <a class="logo" href="index.html">Vat Calculator German</a>
+      <ul class="menu">
+        <li><a class="active" href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="full">
+
+    <!-- HERO + CALCULATOR -->
+    <section class="hero">
+      <div class="wrap hero-center">
+        <span class="badge">Free online tool</span>
+        <h1>VAT Calculator for Germany</h1>
+
+        <div class="card">
+          <form id="vatForm" novalidate>
+            <div class="field">
+              <label>Calculation</label>
+              <div class="rates">
+                <input type="radio" name="mode" id="m-add" value="add" checked>
+                <label for="m-add">Add VAT</label>
+                <input type="radio" name="mode" id="m-remove" value="remove">
+                <label for="m-remove">Exclude VAT</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="amount" id="amountLabel">Net amount (EUR)</label>
+              <input type="number" id="amount" step="0.01" min="0" placeholder="e.g. 100.00" inputmode="decimal">
+            </div>
+
+            <div class="field">
+              <label>VAT rate</label>
+              <div class="rates">
+                <input type="radio" name="rate" id="r7" value="7">
+                <label for="r7">7%</label>
+                <input type="radio" name="rate" id="r10" value="10">
+                <label for="r10">10%</label>
+                <input type="radio" name="rate" id="r19" value="19" checked>
+                <label for="r19">19%</label>
+                <input type="radio" name="rate" id="rc" value="custom">
+                <label for="rc">Custom</label>
+              </div>
+              <div id="customWrap">
+                <label for="customRate">Custom rate (%)</label>
+                <input type="number" id="customRate" step="0.01" min="0" max="100" placeholder="e.g. 5" inputmode="decimal">
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button type="submit">Calculate</button>
+              <button type="button" id="resetBtn" class="secondary">Reset</button>
+            </div>
+            <p class="error" id="error" role="alert"></p>
+          </form>
+
+          <div id="result" aria-live="polite">
+            <div class="row"><span id="lblFirst">Net amount</span><span id="rNet"></span></div>
+            <div class="row"><span>VAT rate</span><span id="rRate"></span></div>
+            <div class="row"><span>VAT amount</span><span id="rVat"></span></div>
+            <div class="row total"><span id="lblLast">Gross amount</span><span id="rGross"></span></div>
+          </div>
+        </div>
+
+        <p class="lead">Add VAT to any net price, or exclude it from a gross price, in seconds. Pick a rate, enter your amount and see the result instantly.</p>
+        <ul class="ticks">
+          <li>100% free, no sign-up</li>
+          <li>Works on phone and desktop</li>
+          <li>Your numbers never leave your browser</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- WHY USE -->
+    <section class="section">
+      <div class="wrap">
+        <h2>Why use our VAT calculator?</h2>
+        <p class="intro">A quick and reliable way to work out VAT without a spreadsheet or a pocket calculator.</p>
+        <div class="grid3">
+          <div class="tile">
+            <h3>Instant results</h3>
+            <p>See the net amount, VAT amount and gross price in one clear result box the moment you press Calculate.</p>
+          </div>
+          <div class="tile">
+            <h3>Flexible rates</h3>
+            <p>Use the 19%, 7% and 10% presets, or enter any custom rate you need.</p>
+          </div>
+          <div class="tile">
+            <h3>Private by design</h3>
+            <p>Everything is calculated in your browser. We never store or send the amounts you type.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section alt" id="how-it-works">
+      <div class="wrap">
+        <h2>How to calculate VAT in 3 steps</h2>
+        <p class="intro">Adding VAT to a net price is simple. Here is how the calculator does it for you.</p>
+        <div class="grid3">
+          <div class="tile">
+            <span class="num">1</span>
+            <h3>Enter the net amount</h3>
+            <p>Type the price before tax, for example 100.00 EUR.</p>
+          </div>
+          <div class="tile">
+            <span class="num">2</span>
+            <h3>Choose the VAT rate</h3>
+            <p>Select 19%, 7%, 10% or Custom and enter your own percentage.</p>
+          </div>
+          <div class="tile">
+            <span class="num">3</span>
+            <h3>Read the gross price</h3>
+            <p>Get the VAT amount and the final gross price, ready to use on an invoice or quote.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMULA + EXAMPLES -->
+    <section class="section" id="formula">
+      <div class="wrap">
+        <h2>VAT formula and examples</h2>
+        <p class="intro">The calculation behind the tool, so you can check or repeat it by hand at any time.</p>
+
+        <div class="formula">
+          VAT amount = Net x (Rate / 100)<br>
+          Gross price = Net + VAT amount
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <caption style="text-align:left; font-weight:700; padding-bottom:10px;">Examples for a net price of 100.00 EUR</caption>
+            <thead>
+              <tr><th>VAT rate</th><th>VAT amount</th><th>Gross price</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>19%</td><td>19.00 EUR</td><td>119.00 EUR</td></tr>
+              <tr><td>7%</td><td>7.00 EUR</td><td>107.00 EUR</td></tr>
+              <tr><td>10%</td><td>10.00 EUR</td><td>110.00 EUR</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VAT IN GERMANY -->
+    <section class="section alt" id="vat-in-germany">
+      <div class="wrap">
+        <h2>VAT in Germany explained</h2>
+        <p class="intro">In Germany, VAT is called Mehrwertsteuer (MwSt.) or Umsatzsteuer (USt.). It is added to the price of most goods and services.</p>
+        <div class="grid3">
+          <div class="tile">
+            <h3>Standard rate: 19%</h3>
+            <p>Applies to most goods and services. It is the default option in the calculator.</p>
+          </div>
+          <div class="tile">
+            <h3>Reduced rate: 7%</h3>
+            <p>Applies to certain items such as many foods and books. Just select the 7% option.</p>
+          </div>
+          <div class="tile">
+            <h3>Net and gross</h3>
+            <p>Net is the price without VAT. Gross is the price including VAT, which is what customers usually pay.</p>
+          </div>
+        </div>
+        <p class="note">Tax rules and rates can change. Please check official sources or ask a tax advisor for your specific case.</p>
+      </div>
+    </section>
+
+    <!-- WHO USES -->
+    <section class="section">
+      <div class="wrap">
+        <h2>Who is this calculator for?</h2>
+        <p class="intro">Anyone who needs a fast VAT figure without extra software.</p>
+        <div class="grid3">
+          <div class="tile">
+            <h3>Freelancers</h3>
+            <p>Add VAT to your fees before sending an invoice or quote to a client.</p>
+          </div>
+          <div class="tile">
+            <h3>Shop owners</h3>
+            <p>Work out gross shelf prices from your net purchase or selling prices.</p>
+          </div>
+          <div class="tile">
+            <h3>Students and shoppers</h3>
+            <p>Understand how much tax is included in a price and learn how VAT works.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section alt" id="faq">
+      <div class="wrap faq">
+        <h2>Frequently asked questions</h2>
+        <p class="intro">Quick answers to common VAT questions.</p>
+
+        <details>
+          <summary>How do I add VAT to a net price?</summary>
+          <p>Multiply the net price by the VAT rate divided by 100 to get the VAT amount, then add it to the net price. For example, 100 EUR at 19% VAT gives 19 EUR VAT and a gross price of 119 EUR.</p>
+        </details>
+        <details>
+          <summary>What are the VAT rates in Germany?</summary>
+          <p>Germany has a standard rate of 19% and a reduced rate of 7% for certain goods and services. Rates can change, so always check official sources for the current rules.</p>
+        </details>
+        <details>
+          <summary>Can I use a VAT rate that is not in the list?</summary>
+          <p>Yes. Choose Custom and type any rate between 0 and 100.</p>
+        </details>
+        <details>
+          <summary>Is my data stored or sent anywhere?</summary>
+          <p>No. All calculations run in your browser. The amounts you enter are never sent to a server or stored.</p>
+        </details>
+        <details>
+          <summary>How do I remove VAT from a gross price?</summary>
+          <p>Divide the gross price by 1 plus the rate as a decimal. For example, 119 EUR gross at 19% gives a net price of 100 EUR (119 / 1.19).</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section dark">
+      <div class="wrap">
+        <h2>Ready to calculate your VAT?</h2>
+        <p class="intro">It takes just a few seconds and it is completely free.</p>
+        <a class="btn-light" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Back to calculator</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2026 Vat Calculator German &middot;
+    <a href="about.html">About Us</a> &middot;
+    <a href="contact.html">Contact Us</a> &middot;
+    <a href="privacy.html">Privacy</a>
+  </footer>
+
+  <div id="cookieBox" role="dialog" aria-label="Cookie notice">
+    <p>We use cookies to make this website work properly and to improve your experience. Read our <a href="privacy.html">Privacy Policy</a> for details.</p>
+    <div class="actions">
+      <button id="cookieAccept" type="button">Accept</button>
+      <button id="cookieDecline" type="button">Decline</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
